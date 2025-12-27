@@ -36,6 +36,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       # 4) Nx commands via pnpm
-      - run: pnpm exec nx run-many -t lint test build typecheck
+      - run: pnpm run ci:all
       - run: pnpm exec nx fix-ci
         if: always()
+
