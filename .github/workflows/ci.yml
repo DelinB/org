@@ -33,7 +33,7 @@ jobs:
           node-version: 20
           cache: 'pnpm'
        
-      - run: pnpm ci
+      - run: pnpm install --frozen-lockfile
 
 
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
