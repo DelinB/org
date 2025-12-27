@@ -2,9 +2,10 @@
   "name": "@org/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {
-    "dev": "concurrently --names \"gateway,auth\" --prefix-colors \"blue,yellow\" \"pnpm nx serve api-gateway\" \"pnpm nx serve auth-service\""
-  },
+"scripts": {
+  "dev": "concurrently --names \"gateway,auth\" --prefix-colors \"blue,yellow\" \"pnpm nx serve api-gateway\" \"pnpm nx serve auth-service\"",
+  "ci:all": "pnpm exec nx run-many -t lint test build typecheck"
+},
   "private": true,
   "dependencies": {
     "axios": "^1.6.0",
