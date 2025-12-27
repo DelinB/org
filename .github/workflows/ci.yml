@@ -13,32 +13,29 @@ permissions:
 jobs:
   main:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
           filter: tree:0
           fetch-depth: 0
 
-      
-      # This enables task distribution via Nx Cloud
-      # Run this command as early as possible, before dependencies are installed
-      # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
-      # Uncomment this line to enable task distribution
-      # - run: npx nx start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
+      # 1) Install pnpm
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false   # just install pnpm, don't auto-install deps
 
-      
-      # Cache node_modules
+      # 2) Setup Node and pnpm cache
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-       
+          cache: pnpm
+
+      # 3) Install dependencies with pnpm
       - run: pnpm install --frozen-lockfile
 
-
-      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-      # - run: npx nx-cloud record -- echo Hello World
-      - run: npx nx run-many -t lint test build typecheck
-      # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/ci/features/self-healing-ci
-      - run: npx nx fix-ci
+      # 4) Nx commands via pnpm
+      - run: pnpm exec nx run-many -t lint test build typecheck
+      - run: pnpm exec nx fix-ci
         if: always()
