@@ -2,14 +2,17 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "types": [
-      "node"
-    ],
-    "rootDir": "src",
-    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
+    "types": ["node"],
+    "baseUrl": "../../",
+    "paths": {
+      "@org/error-handler": ["packages/error-handler/index.ts"],
+      "@org/error-handler/*": ["packages/error-handler/*"]
+    }
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+        "../../packages/error-handler/**/*.ts"  // ✅ Include package
+
   ],
   "exclude": [
     "out-tsc",
